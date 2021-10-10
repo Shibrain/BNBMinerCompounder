@@ -6,7 +6,7 @@ const rpcUrl = process.env.RPC_URL
 const privateKey = process.env.PRIVATE_KEY
 
 
-// Import web3 wiith the FTM RPC 
+// Import web3 wiith the BNB RPC 
 const web3 = new Web3Feature(rpcUrl)
 const wallet = web3.eth.accounts.wallet.add(privateKey)
 
@@ -47,7 +47,7 @@ const checkOpportunityToCompound = async function(){
     const salePrice = await bnbMinerContract.methods.calculateEggSell(combinedTotalEggs.toString()).call()
 
 
-    // Calculate the final amount of FTM that is mine
+    // Calculate the final amount of BNB that is mine
     const finalAmount = parseInt(salePrice) 
 
     // Caluate BNB rewards
@@ -64,7 +64,7 @@ const checkOpportunityToCompound = async function(){
     
     // We use this to determine what multiple of the tx cost we wanna compound at 
     const multiplierTxCost = 3
-    
+
     // Since the GAS Limit is higher we don't have to have a multiple of the TXCOST
     const threshold = txCost * multiplierTxCost
     // We can compound now 
