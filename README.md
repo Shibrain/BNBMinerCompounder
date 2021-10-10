@@ -1,4 +1,4 @@
-# Fantom Miner Compounder
+# BNB Miner Compounder
 
 This program is used to auto-compound the fantom miner at shorter intervals than a human would want to do.
 
