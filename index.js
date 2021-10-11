@@ -27,6 +27,9 @@ let isCompoundingCurrently = false
 // This script works with BNB
 const symbol = 'BNB'
 
+// Value to store current miners
+let minersBefore
+
 // Create function that can be used to check for compounding oppertunities
 const checkOpportunityToCompound = async function(){
 
@@ -69,6 +72,9 @@ const checkOpportunityToCompound = async function(){
     const threshold = txCost * multiplierTxCost
     // We can compound now 
     if(bnbValue > threshold){
+        // Get the current amount of miners 
+        minersBefore = await bnbMinerContract.methods.hatcheryMiners(wallet.address).call()
+
         console.log(`Ready to compound ${bnbValue} ${symbol}`);
         isCompoundingCurrently = true
         compound(gasLimit, gasPrice)
@@ -101,8 +107,14 @@ const compound = async function(gasLimit, gasPrice){
         return
     }
 
+    //Get miners after
+    const minersAfter = await bnbMinerContract.methods.hatcheryMiners(wallet.address).call()
+
+    // Now we check for how many miners we have gained
+    const minersIncrease = minersAfter - minersBefore
+
     isCompoundingCurrently = false
-    console.log("Finished Compounding.")
+    console.log(`Finished Compounding, you have gained ${minersIncrease} miners.`)
 }
 
 checkOpportunityToCompound()
